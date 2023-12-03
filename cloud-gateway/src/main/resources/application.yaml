@@ -1,0 +1,33 @@
+server:
+  port: 8060
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: "optional:configserver:http://localhost:8088"
+  cloud:
+    gateway:
+      routes:
+        - id : task-service
+          uri: lb://task-service
+          predicates:
+            - Path=/task/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+            - name: RewritePath
+              args:
+                regexp: "/task/(?<segment>.*)"
+                replacement: "/${segment}"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: task-service
+  config:
+    import: "optional:configserver:http://localhost:8088"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: "jdbc:mysql://localhost:3306/tasker"
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
