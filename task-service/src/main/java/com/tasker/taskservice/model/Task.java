@@ -23,6 +23,9 @@ public class Task {
     @Column(name = "priority")
     private Long priority;
 
+    public Task(int i, int i1, String hello, String hi_hi_hi, String s, String toDo) {
+    }
+
     @Override
     public String toString() {
         return "Task{" +
